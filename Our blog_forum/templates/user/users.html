@@ -1,22 +1,35 @@
 {% extends 'base.html' %}
 
-{% block header %}
-<h1>{% block title %}Users{% endblock %}</h1>
-{% if g.user %}
-<a class="action" href="{{ url_for('blog.create') }}">New</a>
-{% endif %}
-{% endblock %}
 
 {% block content %}
-{% for user in users %}
-<section>
-    <h1>{{ user['user'] }}</h1>
-    <div class="details">
-        ID: {{user['id']}},Username:{{user['username']}}, Password:{{ user['password']}}
-    </div>
-</section>
-{% if not loop.last %}
-<hr>
-{% endif %}
-{% endfor %}
+<h1>{% block title %}Users{% endblock %}</h1>
+<table class="table table-sm table-dark">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Password</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+    <section>
+        <h1>{{ user['user'] }}</h1>
+        <div class="details">
+            <div class="container">
+                <tr>
+                    <td class="table-primary">{{user['id']}}</td>
+                    <td>{{user['username']}}</td>
+                    <td>{{ user['password']}}</td>
+                </tr>
+            </div>
+        </div>
+    </section>
+    {% if not loop.last %}
+    {% endif %}
+    {% endfor %}
+    </tbody>
+</table>
+
 {% endblock %}
+
