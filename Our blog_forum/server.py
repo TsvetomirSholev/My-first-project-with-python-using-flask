@@ -76,6 +76,16 @@ def add_user():
 # users = get_all_users()
 # print_users(users)
 
+@app.route('/users/<int:id>/delete', methods=('POST',))
+def delete_user(id):
+    db = get_db()
+    # if db.execute(
+    #             'SELECT id FROM user WHERE id = ?', (id,)
+    #     ).fetchone() is not None:
+    db.execute('DELETE FROM user WHERE id = ?', (id,))
+    db.commit()
+    return redirect('/users?randomId=dasdasdasd')
+
 
 @app.route('/users')
 def users():
