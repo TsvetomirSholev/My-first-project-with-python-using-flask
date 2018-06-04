@@ -18,7 +18,7 @@
       <file leaf-file-name="db.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Our blog_forum/db.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
+            <state relative-caret-position="355">
               <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
             </state>
           </provider>
@@ -27,10 +27,10 @@
       <file leaf-file-name="server.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Our blog_forum/server.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
+            <state relative-caret-position="269">
+              <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
               <folding>
-                <element signature="e#0#71#0" expanded="true" />
+                <element signature="e#0#69#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -39,8 +39,8 @@
       <file leaf-file-name="auth.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/flask_dynamic_examples/blog/auth.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="68" column="50" lean-forward="true" selection-start-line="63" selection-start-column="12" selection-end-line="68" selection-end-column="50" />
+            <state relative-caret-position="357">
+              <caret line="60" column="25" lean-forward="true" selection-start-line="51" selection-start-column="8" selection-end-line="60" selection-end-column="25" />
               <folding>
                 <element signature="e#0#16#0" expanded="true" />
               </folding>
@@ -51,7 +51,7 @@
       <file leaf-file-name="legal.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Our blog_forum/templates/legal/legal.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="337">
+            <state relative-caret-position="646">
               <caret line="38" column="14" selection-start-line="38" selection-start-column="14" selection-end-line="38" selection-end-column="14" />
             </state>
           </provider>
@@ -69,8 +69,8 @@
       <file leaf-file-name="add-user.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Our blog_forum/templates/user/add-user.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="90" selection-start-line="7" selection-start-column="90" selection-end-line="7" selection-end-column="90" />
+            <state relative-caret-position="85">
+              <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -139,16 +139,17 @@
         <option value="$PROJECT_DIR$/Our blog_forum/templates/user/home.html" />
         <option value="$PROJECT_DIR$/Our blog_forum/templates/home/home.html" />
         <option value="$PROJECT_DIR$/Our blog_forum/templates/user/users.html" />
-        <option value="$PROJECT_DIR$/Our blog_forum/templates/user/add-user.html" />
         <option value="$PROJECT_DIR$/Our blog_forum/templates/base.html" />
         <option value="$PROJECT_DIR$/Our blog_forum/templates/legal/legal.html" />
         <option value="$PROJECT_DIR$/Our blog_forum/templates/recipes/recipes.html" />
+        <option value="$PROJECT_DIR$/Our blog_forum/templates/user/add-user.html" />
         <option value="$PROJECT_DIR$/Our blog_forum/server.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="30" />
+    <option name="x" value="394" />
+    <option name="y" value="212" />
     <option name="width" value="694" />
     <option name="height" value="775" />
   </component>
@@ -338,16 +339,16 @@
     </recent_temporary>
   </component>
   <component name="SvnConfiguration">
-    <configuration>C:\Users\Cvetomir Sholev\AppData\Roaming\Subversion</configuration>
+    <configuration />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1376" height="784" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24962631" />
-      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32852563" />
-      <window_info anchor="bottom" id="Python Console" order="8" />
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32852563" />
+      <window_info anchor="bottom" id="Version Control" order="7" weight="0.32852563" />
+      <window_info anchor="bottom" id="Python Console" order="8" weight="0.32852563" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39903846" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -378,7 +379,7 @@
           </properties>
         </breakpoint>
       </default-breakpoints>
-      <option name="time" value="12" />
+      <option name="time" value="13" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -393,9 +394,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="36" column="21" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#71#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -431,9 +429,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="238">
           <caret line="14" column="38" selection-start-line="14" selection-start-column="38" selection-end-line="14" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#71#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -465,13 +460,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Our blog_forum/Flask.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" lean-forward="true" selection-start-line="44" selection-end-line="45" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Our blog_forum/Flask.py" />
     <entry file="file://$PROJECT_DIR$/Our blog_forum/static/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -612,13 +601,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Our blog_forum/db.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Our blog_forum/Setup.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="170">
@@ -641,28 +623,9 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/flask_dynamic_examples/blog/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/Our blog_forum/Flask.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="748">
-          <caret line="44" selection-start-line="44" selection-end-line="45" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Our blog_forum/templates/user/add-user.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="90" selection-start-line="7" selection-start-column="90" selection-end-line="7" selection-end-column="90" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/Our blog_forum/Flask.py" />
     <entry file="file://$PROJECT_DIR$/Our blog_forum/templates/base.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="391">
@@ -679,7 +642,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Our blog_forum/templates/legal/legal.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="337">
+        <state relative-caret-position="646">
           <caret line="38" column="14" selection-start-line="38" selection-start-column="14" selection-end-line="38" selection-end-column="14" />
         </state>
       </provider>
@@ -693,20 +656,34 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/flask_dynamic_examples/blog/auth.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="68" column="50" lean-forward="true" selection-start-line="63" selection-start-column="12" selection-end-line="68" selection-end-column="50" />
+        <state relative-caret-position="357">
+          <caret line="60" column="25" lean-forward="true" selection-start-line="51" selection-start-column="8" selection-end-line="60" selection-end-column="25" />
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Our blog_forum/db.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="355">
+          <caret line="30" column="25" selection-start-line="30" selection-start-column="25" selection-end-line="30" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Our blog_forum/templates/user/add-user.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/Our blog_forum/server.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="59" column="33" selection-start-line="59" selection-start-column="33" selection-end-line="59" selection-end-column="33" />
+        <state relative-caret-position="269">
+          <caret line="49" column="16" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
           <folding>
-            <element signature="e#0#71#0" expanded="true" />
+            <element signature="e#0#69#0" expanded="true" />
           </folding>
         </state>
       </provider>
