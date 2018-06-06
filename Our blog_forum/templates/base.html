@@ -14,21 +14,25 @@
     <nav class="navbar navbar-default">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#">CookingNow</a>
+                <a class="navbar-brand" href="/">CookingNow</a>
             </div>
             <ul class="nav navbar-nav">
                 <li {%if g.active_url=='/' %} class="active" {% endif %}><a href="/">Home</a></li>
                 <li {% if g.active_url=='/users' %} class="active" {% endif %}><a href="/users">Users</a></li>
-                <li {% if g.active_url=='/users/add' %} class="active" {% endif %}><a href="/users/add">Add New User</a></li>
+                <li {% if g.active_url=='/users/add' %} class="active" {% endif %}><a href="/users/add">Rgistration</a>
+                </li>
                 <li {%if g.active_url=='/recipes' %} class="active" {% endif %}><a href="/recipes">Recipes</a></li>
-                <li {%if g.active_url=='/legal' %} class="active" {% endif %}><a href="/legal">Legal information</a></li>
+                <li {%if g.active_url=='/legal' %} class="active" {% endif %}><a href="/legal">Legal information</a>
+                </li>
             </ul>
         </div>
     </nav>
 </header>
 <section class="container">
-    {% block header %}{% endblock %}
-    {% block content %}{% endblock %}
+    {% block header %}
+    {% endblock %}
+    {% block content %}
+    {% endblock %}
 </section>
 </body>
 </html>

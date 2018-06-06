@@ -52,11 +52,14 @@ def add_user():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
+        email = request.form['email']
         db = get_db()
         if not username:
             error = 'Username is required.'
         elif not password:
             error = 'Password is required.'
+        elif not email:
+            error = 'E-mail is required.'
         elif db.execute(
                 'SELECT id FROM user WHERE username = ?', (username,)
         ).fetchone() is not None:
@@ -64,8 +67,8 @@ def add_user():
 
         if error is None:
             db.execute(
-                'INSERT INTO user (username, password) VALUES (?, ?)',
-                (username, password)
+                'INSERT INTO user (username, password, email) VALUES (?, ?, ?)',
+                (username, password, email)
             )
             db.commit()
             return redirect('users')

@@ -1,13 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{% block title %}Users{% endblock %}</h1>
+<h1>{% block title %}Recipes{% endblock %}</h1>
 <table class="table table-sm table-dark">
     <thead>
     <tr>
-        <th>ID</th>
         <th>Username</th>
-        <th>Password</th>
+        <th>Post Topic</th>
+        <th>Random Data</th>
     </tr>
     </thead>
     <tbody>
@@ -29,9 +29,9 @@
     {% endif %}
     {% endfor %}
     <div class="row">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-            <span class="glyphicons glyphicons-notes-2"></span> Add User
-        </button>
+        <a href="/users/add"  class="btn btn-primary">
+            Add Post
+        </a>
     </div>
     </tbody>
 </table>
