@@ -12,7 +12,7 @@ def init_db():
     db.executescript(f.read())
 
 def insert_user(username, password, email,role):
-    db.execute('INSERT INTO user (username, password, email,role) VALUES (?, ?, ?, ?)',
+    db.execute('INSERT INTO user (username, password, email, role) VALUES (?, ?, ?, ?)',
                (username, password, email, role))
     db.commit()
 

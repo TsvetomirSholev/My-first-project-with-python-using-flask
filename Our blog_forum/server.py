@@ -24,32 +24,10 @@ def get_all_users():
 
 def print_users(user_list):
     for user in user_list:
-        print('username: ', user['username'], ', password: ', user['password'], ', e-mail: ', user['email'], ', role: ', user['role'])
+        print_user(user)
 
 def print_user(user):
     print('username: ', user['username'], ', password: ', user['password'], ', e-mail: ', user['email'], ', role: ', user['role'])
-
-@app.route('/login', methods=('GET', 'POST'))
-def get_login():
-    error = None
-    g.active_url = '/login'
-    if request.method == 'POST':
-        if request.form['username'] =='admin':
-            return
-    # db = get_db()
-    # users = get_all_users()
-    # print_users(users)
-    return render_template('login/login.html', error=error)
-
-
-@app.route('/recipes')
-def get_recipes():
-    g.active_url = '/recipes'
-    # db = get_db()
-    # users = get_all_users()
-    # print_users(users)
-    return render_template('recipes/recipes.html')
-
 
 @app.route('/users/add', methods=('GET', 'POST'))
 def add_user():
@@ -77,9 +55,9 @@ def add_user():
         ).fetchone() is not None:
             error = 'User {0} is already registered.'.format(username)
         elif db.execute(
-                'SELECT email FROM user WHERE email = ?', (email,)
-        ).fetchone == email:
-            error = 'E-mail {0} already exists!'.format(email)
+                'SELECT id FROM user WHERE email = ?', (email,)
+        ).fetchone() is not None:
+            error = 'E-mail {0} is already in use.'.format(email)
 
         if error is None:
             db.execute(
@@ -100,7 +78,8 @@ def edit_user(id):
     error = None
     if user is None:
         error = 'User with ID={0} does not exist.'.format(id)
-    print_user(user)
+    else:
+        print_user(user)
     g.active_url = '/users/edit'
     if request.method == 'POST':
         username = request.form['username']
@@ -119,11 +98,11 @@ def edit_user(id):
             error = "Role is required!"
         elif not match:
             error = 'Invalid E-mail!'
-        elif db.execute(
+        elif user['username'] != username and db.execute(
                 'SELECT id FROM user WHERE username = ?', (username,)
         ).fetchone() is not None:
             error = 'User {0} is already registered.'.format(username)
-        elif db.execute(
+        elif  db.execute(
                 'SELECT email FROM user WHERE email = ?', (email,)
         ).fetchone == email:
             error = 'E-mail {0} already exists!'.format(email)
@@ -147,6 +126,23 @@ def delete_user(id):
     db.execute('DELETE FROM user WHERE id = ?', (id,))
     db.commit()
     return redirect('/users')
+
+# @app.route('/login', methods=('GET', 'POST'))
+# def user_login():
+#    if request.method == 'POST':
+#         username = request.form['username']
+#         password = request.form['password']
+#         db = get_db()
+#         error = None
+#         user = db.execute(
+#             'SELECT * FROM user WHERE username = ?', (username,)
+#         ).fetchone()
+#         if user is None:
+#              error = 'Incorrect username.'
+#         elif user == user['username'] and password != user['password']:
+#              error = 'Incorrect password.'
+#         if error is None:
+#             return redirect(url_for(), error=error)
 
 
 

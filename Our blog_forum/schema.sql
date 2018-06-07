@@ -27,7 +27,7 @@ CREATE TABLE post (
 
 ---Comments table
 CREATE TABLE comments(
-  post_name TEXT NOT NULL,
+  post_id TEXT NOT NULL,
   comment_text TEXT NOT NULL,
-  FOREIGN KEY (post_name) REFERENCES post (title)
+  FOREIGN KEY (post_id) REFERENCES post (title)
 );
