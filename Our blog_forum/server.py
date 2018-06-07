@@ -1,5 +1,5 @@
 from flask import Flask, render_template, g, request, redirect
-import sqlite3, os
+import sqlite3, os, re
 
 DATABASE = './blog.sqlite'
 
@@ -27,13 +27,13 @@ def print_users(user_list):
         print('username: ', user['username'], ', password: ', user['password'])
 
 
-@app.route('/legal')
-def get_legal():
-    g.active_url = '/legal'
+@app.route('/login')
+def get_login():
+    g.active_url = '/login'
     # db = get_db()
     # users = get_all_users()
     # print_users(users)
-    return render_template('legal/legal.html')
+    return render_template('login/login.html')
 
 
 @app.route('/recipes')
@@ -53,13 +53,20 @@ def add_user():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
+        match = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
         db = get_db()
+        if email == db.execute('SELECT email FROM user WHERE email = ?', (email,)
+                               ).fetchone:
+            error = 'E-mail exists!'
         if not username:
-            error = 'Username is required.'
+            error = 'Username is required!  '
         elif not password:
-            error = 'Password is required.'
+            error = 'Password is required!'
+
         elif not email:
-            error = 'E-mail is required.'
+            error = 'E-mail is required!'
+        elif not match:
+            error = 'Invalid E-mail!'
         elif db.execute(
                 'SELECT id FROM user WHERE username = ?', (username,)
         ).fetchone() is not None:
@@ -87,7 +94,7 @@ def delete_user(id):
     #     ).fetchone() is not None:
     db.execute('DELETE FROM user WHERE id = ?', (id,))
     db.commit()
-    return redirect('/users?randomId=dasdasdasd')
+    return redirect('/users')
 
 
 @app.route('/users')
