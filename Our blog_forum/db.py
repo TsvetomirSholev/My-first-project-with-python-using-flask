@@ -11,9 +11,9 @@ def init_db():
     # print(f.read())
     db.executescript(f.read())
 
-def insert_user(username, password, email):
-    db.execute('INSERT INTO user (username, password, email) VALUES (?, ?, ?)',
-               (username, password, email))
+def insert_user(username, password, email,role):
+    db.execute('INSERT INTO user (username, password, email,role) VALUES (?, ?, ?, ?)',
+               (username, password, email, role))
     db.commit()
 
 def get_all_users():
@@ -22,15 +22,16 @@ def get_all_users():
 
 def print_users(user_list):
     for user in user_list:
-        print ('username: ', user['username'], ', password: ', user['password'], 'email: ', user['email'])
+        print ('username: ', user['username'], ', password: ', user['password'], 'email: ', user['email'], 'role: ', user['role'])
 
 db = get_db()
 
 if __name__ == "__main__":
     init_db()
-    insert_user("Ivan", "ivan123", "ivan@abv.bg")
-    insert_user("Petar", "pythonrocks", "petar@gmail.com")
-    insert_user("Dimitar", "hero123","hero123@yahoo.com" )
+    insert_user("Ivan", "ivan123", "ivan@abv.bg", "user")
+    insert_user("Petar", "pythonrocks", "petar@gmail.com", "user")
+    insert_user("Dimitar", "hero123","hero123@yahoo.com", "user")
+    insert_user("admin", "admin", "newcecoweee@gmail.com", "admin")
     user_list = get_all_users()
     print_users(user_list)
     db.close();

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %}Edit user{% endblock %}</h1>
+<section class="user col-sm-6">
+    {% if error != None %}
+    <div class="alert alert-danger"> {{ error }} </div>
+    {% endif %}
+    <form action="{{ url_for('edit_user', id=user['id']) }}" method="POST">
+        <div class="row">
+            <input class="form-control" type="text" name="id" placeholder="ID" value="{{ user['id'] }}" readonly/>
+            <input class="form-control" type="text" name="username" placeholder="Username" autocomplete="off" value="{{ user['username'] }}"/>
+            <input class="form-control" type="text" name="password" placeholder="Password" value="{{ user['password'] }}" />
+            <input class="form-control" type="text" name="email" placeholder="Enter e-mail"  value="{{ user['email'] }}"  autocomplete="off"/>
+            <select name="role">
+                <option value="user" {% if user.role=='user' %} selected {%endif%}>User</option>
+                <option value="moderator"{% if user.role=='moderator' %} selected {%endif%}>Moderator</option>
+                <option value="admin" {% if user.role=='admin' %} selected {%endif%}>Admin</option>
+            </select>
+            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+              EDIT
+            </button>
+        </div>
+    </form>
+</section>
+
+{% endblock %}
+
