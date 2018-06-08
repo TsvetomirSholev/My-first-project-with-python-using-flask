@@ -26,8 +26,11 @@ def print_users(user_list):
     for user in user_list:
         print_user(user)
 
+
 def print_user(user):
-    print('username: ', user['username'], ', password: ', user['password'], ', e-mail: ', user['email'], ', role: ', user['role'])
+    print('username: ', user['username'], ', password: ', user['password'], ', e-mail: ', user['email'], ', role: ',
+          user['role'])
+
 
 @app.route('/users/add', methods=('GET', 'POST'))
 def add_user():
@@ -40,6 +43,8 @@ def add_user():
         role = request.form['role']
         match = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
         db = get_db()
+        if role == "admin" or "moderator":
+            error = "You don't have permission to perform this action!"
         if not username:
             error = 'Username is required!  '
         elif not password:
@@ -69,7 +74,8 @@ def add_user():
 
     return render_template('user/add-user.html', error=error)
 
-@app.route('/users/<int:id>/edit', methods=('POST','GET'))
+
+@app.route('/users/<int:id>/edit', methods=('POST', 'GET'))
 def edit_user(id):
     db = get_db()
     user = db.execute(
@@ -102,7 +108,7 @@ def edit_user(id):
                 'SELECT id FROM user WHERE username = ?', (username,)
         ).fetchone() is not None:
             error = 'User {0} is already registered.'.format(username)
-        elif  db.execute(
+        elif db.execute(
                 'SELECT email FROM user WHERE email = ?', (email,)
         ).fetchone == email:
             error = 'E-mail {0} already exists!'.format(email)
@@ -117,6 +123,7 @@ def edit_user(id):
 
     return render_template('/user/edit-user.html', user=user, error=error)
 
+
 @app.route('/users/<int:id>/delete', methods=('POST',))
 def delete_user(id):
     db = get_db()
@@ -127,23 +134,47 @@ def delete_user(id):
     db.commit()
     return redirect('/users')
 
-# @app.route('/login', methods=('GET', 'POST'))
-# def user_login():
-#    if request.method == 'POST':
-#         username = request.form['username']
-#         password = request.form['password']
-#         db = get_db()
-#         error = None
-#         user = db.execute(
-#             'SELECT * FROM user WHERE username = ?', (username,)
-#         ).fetchone()
-#         if user is None:
-#              error = 'Incorrect username.'
-#         elif user == user['username'] and password != user['password']:
-#              error = 'Incorrect password.'
-#         if error is None:
-#             return redirect(url_for(), error=error)
+@app.route('/posts')
+def show_posts():
+    return render_template('/posts/posts.html')
 
+# @app.route('/posts/add')
+# def get_post(id, check_author=True):
+#     error = None
+#     post=get_db().execute(
+#         'SELECT p.id, title, body, created, author_id, username'
+#         'FROM post p JOIN user u ON p.author_id = u.id'
+#         'WHERE p.id = ?',
+#         (id,)
+#     ).fetchone()
+#     if post is None:
+#         error = "Post {} does not exist".format(id)
+#     if check_author and post['author_id'] != g.user['id']:
+#         error = "Forbidden"
+#
+#     return post
+
+
+
+@app.route('/login', methods=('GET', 'POST'))
+def user_login():
+    if request.method == 'POST':
+        g.active_url='/login/login'
+        username = request.form['username']
+        password = request.form['password']
+        db = get_db()
+        error = None
+        user = db.execute(
+            'SELECT * FROM user WHERE username = ?', (username,)
+        ).fetchone()
+        if user is None:
+            error = 'Incorrect username.'
+        elif user == user['username'] and password != user['password']:
+            error = 'Incorrect password.'
+        if error is None:
+            print("OK")
+
+    return render_template('/login/login.html',)
 
 
 @app.route('/users')
