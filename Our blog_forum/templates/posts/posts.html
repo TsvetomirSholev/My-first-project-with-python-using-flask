@@ -29,9 +29,11 @@
     {% endif %}
     {% endfor %}
     <div class="row">
-        <a href="/login"  class="btn btn-primary">
+        {% if session.get('user')['role'] != 'admin' or 'moderator' or 'user' %}
+        <a href="/posts/add"  class="btn btn-primary">
             Add Post
         </a>
+        {% endif %}
     </div>
     </tbody>
 </table>

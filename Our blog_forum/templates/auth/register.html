@@ -1,17 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>{% block title %}Log in{% endblock %}</h1>
+<h1>{% block title %}Registration{% endblock %}</h1>
 <section class="user col-sm-6">
-    {% if error != error %}
+    {% if error != None %}
     <div class="alert alert-danger"> {{ error }} </div>
     {% endif %}
-    <form action="/login/login" method="POST">
+    <form action="/users/add" method="POST">
         <div class="row">
             <input class="form-control" type="text" name="username" placeholder="Username" autocomplete="off"/>
             <input class="form-control" type="password" name="password" placeholder="Password"/>
+            <input class="form-control" type="text" name="email" placeholder="Enter e-mail" autocomplete="off"/>
+
             <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                Log in
+              Register
             </button>
         </div>
     </form>

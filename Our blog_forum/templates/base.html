@@ -19,11 +19,20 @@
             <ul class="nav navbar-nav">
                 <li {%if g.active_url=='/' %} class="active" {% endif %}><a href="/">Home</a></li>
                 <li {% if g.active_url=='/users' %} class="active" {% endif %}><a href="/users">Users</a></li>
-                <li {% if g.active_url=='/users/add' %} class="active" {% endif %}><a href="/users/add">Rgistration</a>
+                <li {% if g.active_url=='/users/add' %} class="active" {% endif %}><a href="/users/add">Add user</a>
                 </li>
                 <li {%if g.active_url=='/posts' %} class="active" {% endif %}><a href="/posts">Posts</a></li>
-                <li {%if g.active_url=='/login' %} class="active" {% endif %}><a href="/login">Login</a>
                 </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                {% if session.get('user') %}
+                <li><a class="logged-user" href="#">{{ session.get('user')['username'] + ' : ' +
+                    session.get('user')['role'] }}</a></li>
+                <li><a href="{{ url_for('logout') }}">Log Out</a></li>
+                {% else %}
+                <li><a href="{{ url_for('register') }}">Register</a></li>
+                <li><a href="{{ url_for('login') }}">Log In</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>
@@ -31,6 +40,9 @@
 <section class="container">
     {% block header %}
     {% endblock %}
+    {% for message in get_flashed_messages() %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endfor %}
     {% block content %}
     {% endblock %}
 </section>

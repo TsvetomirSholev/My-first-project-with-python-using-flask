@@ -1,9 +1,10 @@
-from flask import Flask, render_template, g, request, redirect
+from flask import Flask, render_template, g, request, redirect, session, flash, url_for
 import sqlite3, os, re
 
 DATABASE = './blog.sqlite'
 
 app = Flask(__name__)
+app.secret_key = 'any random string'
 
 
 def get_db():
@@ -35,6 +36,12 @@ def print_user(user):
 @app.route('/users/add', methods=('GET', 'POST'))
 def add_user():
     error = None
+    role = session.get('user').get('role')
+    if role != 'admin':
+            error ='You do not have permission to perform this action!'
+    if error != None:
+        flash(error)
+        return redirect('/')
     g.active_url = '/users/add'
     if request.method == 'POST':
         username = request.form['username']
@@ -43,16 +50,12 @@ def add_user():
         role = request.form['role']
         match = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
         db = get_db()
-        if role == "admin" or "moderator":
-            error = "You don't have permission to perform this action!"
         if not username:
             error = 'Username is required!  '
         elif not password:
             error = 'Password is required!'
         elif not email:
             error = 'E-mail is required!'
-        elif not role:
-            error = "Role is required!"
         elif not match:
             error = 'Invalid E-mail!'
         elif db.execute(
@@ -77,6 +80,14 @@ def add_user():
 
 @app.route('/users/<int:id>/edit', methods=('POST', 'GET'))
 def edit_user(id):
+    error = None
+    role = session.get('user').get('role')
+    if role != 'moderator' and 'admin':
+            error ='You do not have permission to perform this action!'
+    if error != None:
+        flash(error)
+        return redirect('/')
+
     db = get_db()
     user = db.execute(
         'SELECT * FROM user WHERE id = ?', (id,)
@@ -126,6 +137,13 @@ def edit_user(id):
 
 @app.route('/users/<int:id>/delete', methods=('POST',))
 def delete_user(id):
+    error = None
+    role = session.get('user').get('role')
+    if role != 'admin':
+            error ='You do not have permission to perform this action!'
+    if error != None:
+        flash(error)
+        return redirect('/')
     db = get_db()
     # if db.execute(
     #             'SELECT id FROM user WHERE id = ?', (id,)
@@ -134,32 +152,26 @@ def delete_user(id):
     db.commit()
     return redirect('/users')
 
-@app.route('/posts')
-def show_posts():
+
+@app.route('/posts/')
+def view_post():
+
     return render_template('/posts/posts.html')
 
-# @app.route('/posts/add')
-# def get_post(id, check_author=True):
-#     error = None
-#     post=get_db().execute(
-#         'SELECT p.id, title, body, created, author_id, username'
-#         'FROM post p JOIN user u ON p.author_id = u.id'
-#         'WHERE p.id = ?',
-#         (id,)
-#     ).fetchone()
-#     if post is None:
-#         error = "Post {} does not exist".format(id)
-#     if check_author and post['author_id'] != g.user['id']:
-#         error = "Forbidden"
-#
-#     return post
 
+@app.route('/posts/add')
+def add_post():
+# if error is None:
+#             # store the user id in a new session and return to the index
+#             session.clear()
+#             session['user'] = {'id': user['id'], 'username': user['username'], 'role': user['role']}
+    return render_template('/posts/add-post.html')
 
 
 @app.route('/login', methods=('GET', 'POST'))
-def user_login():
+def login():
+    """Log in a registered user by adding the user id to the session."""
     if request.method == 'POST':
-        g.active_url='/login/login'
         username = request.form['username']
         password = request.form['password']
         db = get_db()
@@ -167,19 +179,82 @@ def user_login():
         user = db.execute(
             'SELECT * FROM user WHERE username = ?', (username,)
         ).fetchone()
+
         if user is None:
             error = 'Incorrect username.'
-        elif user == user['username'] and password != user['password']:
+        elif user['password'] != password:
             error = 'Incorrect password.'
-        if error is None:
-            print("OK")
 
-    return render_template('/login/login.html',)
+        if error is None:
+            # store the user id in a new session and return to the index
+            session.clear()
+            session['user'] = {'id': user['id'], 'username': user['username'], 'role': user['role']}
+            return redirect(url_for('home'))
+
+        flash(error)
+
+    return render_template('auth/login.html')
+
+
+@app.route('/logout')
+def logout():
+    g.active_url = '/logout'
+    session.clear()
+    return render_template('home/home.html')
+
+
+@app.route('/register', methods=('GET', 'POST'))
+def register():
+    g.active_url = '/register'
+    error = None
+    if request.method == 'POST':
+        g.active_url = '/users/add'
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+        role = 'user'
+        match = re.match('^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$', email)
+        db = get_db()
+        if not username:
+            error = 'Username is required!  '
+        elif not password:
+            error = 'Password is required!'
+        elif not email:
+            error = 'E-mail is required!'
+        elif not match:
+            error = 'Invalid E-mail!'
+        elif db.execute(
+                'SELECT id FROM user WHERE username = ?', (username,)
+        ).fetchone() is not None:
+            error = 'User {0} is already registered.'.format(username)
+        elif db.execute(
+                'SELECT id FROM user WHERE email = ?', (email,)
+        ).fetchone() is not None:
+            error = 'E-mail {0} is already in use.'.format(email)
+
+        if error is None:
+            db.execute(
+                'INSERT INTO user (username, password, email, role) VALUES (?, ?, ?, ?)',
+                (username, password, email, role)
+            )
+            db.commit()
+            return redirect('/login')
+        else:
+            flash(error)
+
+    return render_template('auth/register.html')
 
 
 @app.route('/users')
 def users():
+    error = None
     g.active_url = '/users'
+    role = session.get('user').get('role')
+    if role != 'moderator' and 'admin':
+            error ='You do not have permission to perform this action!'
+    if error != None:
+        flash(error)
+        return redirect('/')
     db = get_db()
     users = get_all_users()
     print_users(users)

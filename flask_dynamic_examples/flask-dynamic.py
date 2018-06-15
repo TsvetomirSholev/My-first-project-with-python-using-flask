@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
-    return redirect("/static/index.html", code=302)
+    return redirect("/static/users.html", code=302)
 
 
 @app.route("/hello")
@@ -13,7 +13,7 @@ def hello():
     <html>
     <head>
         <title>Flask Hallo World</title>
-        <style> 
+        <style>
             body {
                 font-family: Helvetica, Arial, sans-serif;
                 font-variant: small-caps;
