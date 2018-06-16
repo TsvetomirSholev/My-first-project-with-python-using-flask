@@ -30,9 +30,9 @@ if __name__ == "__main__":
     init_db()
     insert_user("Ivan", "ivan123", "ivan@abv.bg", "user")
     insert_user("Petar", "pythonrocks", "petar@gmail.com", "user")
-    insert_user("Dimitar", "hero123","hero123@yahoo.com", "user")
+    insert_user("mod", "mod","hero123@yahoo.com", "moderator")
     insert_user("admin", "admin", "newcecoweee@gmail.com", "admin")
     user_list = get_all_users()
     print_users(user_list)
-    db.close();
+    db.close()
     print('DB closed ...')

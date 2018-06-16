@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}New Post{% endblock %}</h1>
+{% endblock %}
+
 {% block content %}
+<section class="user col-sm-12">
+    <form action="/post/add" method="POST">
+        <label>Title</label>
+        <input class="form-control" type="text" name="title" placeholder="Enter title here!" required>
+        <label>Body</label>
+        <textarea class="form-control" name="body" placeholder="Enter the body here!"></textarea>
+        <button type="submit" class="btn btn-primary">
+            Add Post !
+        </button>
 
-
-
-
-
-
-
-
-
-
-
+    </form>
+</section>
 
 {% endblock %}
+

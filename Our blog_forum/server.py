@@ -1,5 +1,5 @@
 from flask import Flask, render_template, g, request, redirect, session, flash, url_for
-import sqlite3, os, re
+import sqlite3, os, re, datetime
 
 DATABASE = './blog.sqlite'
 
@@ -38,7 +38,7 @@ def add_user():
     error = None
     role = session.get('user').get('role')
     if role != 'admin':
-            error ='You do not have permission to perform this action!'
+        error = 'You do not have permission to perform this action!'
     if error != None:
         flash(error)
         return redirect('/')
@@ -83,7 +83,7 @@ def edit_user(id):
     error = None
     role = session.get('user').get('role')
     if role != 'moderator' and 'admin':
-            error ='You do not have permission to perform this action!'
+        error = 'You do not have permission to perform this action!'
     if error != None:
         flash(error)
         return redirect('/')
@@ -140,7 +140,7 @@ def delete_user(id):
     error = None
     role = session.get('user').get('role')
     if role != 'admin':
-            error ='You do not have permission to perform this action!'
+        error = 'You do not have permission to perform this action!'
     if error != None:
         flash(error)
         return redirect('/')
@@ -155,17 +155,33 @@ def delete_user(id):
 
 @app.route('/posts/')
 def view_post():
-
     return render_template('/posts/posts.html')
 
 
-@app.route('/posts/add')
+@app.route('/post/add', methods=('GET', 'POST '))
 def add_post():
-# if error is None:
-#             # store the user id in a new session and return to the index
-#             session.clear()
-#             session['user'] = {'id': user['id'], 'username': user['username'], 'role': user['role']}
-    return render_template('/posts/add-post.html')
+    error = None
+    g.active_url = '/posts/add'
+    if request.method == 'POST':
+        title = request.form['title']
+        body = request.form['password']
+        username = session.get('user')['username']
+        created = datetime.datetime.now()
+        db = get_db()
+        if not title:
+            error = 'Title is required!'
+        elif not body:
+            error = 'Body is required!'
+        if error is not None:
+            flash(error)
+        else:
+            db.execute(
+                'INSERT INTO post (username, title, body, created) VALUES (?, ?, ?, ?)',
+                (username, title, body, created)
+            )
+            db.commit()
+        return redirect('posts')
+    return render_template('posts/add-post.html', )
 
 
 @app.route('/login', methods=('GET', 'POST'))
@@ -250,8 +266,8 @@ def users():
     error = None
     g.active_url = '/users'
     role = session.get('user').get('role')
-    if role != 'moderator' and 'admin':
-            error ='You do not have permission to perform this action!'
+    if role != 'admin':
+        error = 'You do not have permission to perform this action!'
     if error != None:
         flash(error)
         return redirect('/')
