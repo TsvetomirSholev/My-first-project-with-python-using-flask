@@ -22,11 +22,21 @@ def get_all_users():
     users = g.db.execute('SELECT * FROM user').fetchall()
     return users
 
+def get_all_posts():
+    post = g.db.execute('SELECT * FROM post').fetchall()
+    return post
+
 
 def print_users(user_list):
     for user in user_list:
         print_user(user)
 
+def print_posts(post_list):
+    for post in post_list:
+        print_post(post)
+
+def print_post(post):
+    print('post: ', post['username'], ', password: ', post['title'], ', e-mail: ', post['body'])
 
 def print_user(user):
     print('username: ', user['username'], ', password: ', user['password'], ', e-mail: ', user['email'], ', role: ',
@@ -82,7 +92,7 @@ def add_user():
 def edit_user(id):
     error = None
     role = session.get('user').get('role')
-    if role != 'moderator' and 'admin':
+    if role !='admin':
         error = 'You do not have permission to perform this action!'
     if error != None:
         flash(error)
@@ -164,7 +174,7 @@ def add_post():
     g.active_url = '/posts/add'
     if request.method == 'POST':
         title = request.form['title']
-        body = request.form['password']
+        body = request.form['body']
         username = session.get('user')['username']
         created = datetime.datetime.now()
         db = get_db()
