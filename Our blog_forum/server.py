@@ -36,7 +36,7 @@ def print_posts(post_list):
         print_post(post)
 
 def print_post(post):
-    print('post: ', post['username'], ', password: ', post['title'], ', e-mail: ', post['body'])
+    print('post: ', post['username'], ', title: ', post['title'], ', body: ', post['body'])
 
 def print_user(user):
     print('username: ', user['username'], ', password: ', user['password'], ', e-mail: ', user['email'], ', role: ',
