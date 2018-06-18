@@ -1,5 +1,5 @@
 from flask import Flask, render_template, g, request, redirect, session, flash, url_for
-import sqlite3, os, re, datetime
+import sqlite3, os, re
 
 DATABASE = './blog.sqlite'
 
@@ -23,8 +23,8 @@ def get_all_users():
     return users
 
 def get_all_posts():
-    post = g.db.execute('SELECT * FROM post').fetchall()
-    return post
+    posts = g.db.execute('SELECT * FROM post').fetchall()
+    return posts
 
 
 def print_users(user_list):
@@ -163,12 +163,7 @@ def delete_user(id):
     return redirect('/users')
 
 
-@app.route('/posts/')
-def view_post():
-    return render_template('/posts/posts.html')
-
-
-@app.route('/post/add', methods=('GET', 'POST '))
+@app.route('/post/add', methods=('GET', 'POST'))
 def add_post():
     error = None
     g.active_url = '/posts/add'
@@ -176,7 +171,6 @@ def add_post():
         title = request.form['title']
         body = request.form['body']
         username = session.get('user')['username']
-        created = datetime.datetime.now()
         db = get_db()
         if not title:
             error = 'Title is required!'
@@ -186,8 +180,8 @@ def add_post():
             flash(error)
         else:
             db.execute(
-                'INSERT INTO post (username, title, body, created) VALUES (?, ?, ?, ?)',
-                (username, title, body, created)
+                'INSERT INTO post (username, title, body) VALUES (?, ?, ?)',
+                (username, title, body)
             )
             db.commit()
         return redirect('posts')
@@ -285,6 +279,15 @@ def users():
     users = get_all_users()
     print_users(users)
     return render_template('user/users.html', users=users)
+
+
+@app.route('/posts/')
+def posts():
+    g.active_url = '/posts'
+    db = get_db()
+    posts = get_all_posts()
+    print_posts(posts)
+    return render_template('posts/posts.html', posts=posts)
 
 
 @app.route('/')

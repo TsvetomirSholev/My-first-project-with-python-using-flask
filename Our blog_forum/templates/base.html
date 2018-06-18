@@ -18,9 +18,11 @@
             </div>
             <ul class="nav navbar-nav">
                 <li {%if g.active_url=='/' %} class="active" {% endif %}><a href="/">Home</a></li>
+                {% if session.get('user')['role'] == 'admin' %}
                 <li {% if g.active_url=='/users' %} class="active" {% endif %}><a href="/users">Users</a></li>
                 <li {% if g.active_url=='/users/add' %} class="active" {% endif %}><a href="/users/add">Add user</a>
                 </li>
+                {% endif %}
                 <li {%if g.active_url=='/posts' %} class="active" {% endif %}><a href="/posts">Posts</a></li>
                 </li>
             </ul>
@@ -41,7 +43,7 @@
     {% block header %}
     {% endblock %}
     {% for message in get_flashed_messages() %}
-        <div class="alert alert-danger">{{ message }}</div>
+    <div class="alert alert-danger">{{ message }}</div>
     {% endfor %}
     {% block content %}
     {% endblock %}
