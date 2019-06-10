@@ -1,4 +1,6 @@
-import sqlite3, os, datetime
+import os
+import sqlite3
+
 
 def get_db():
     DATABASE = os.path.join('.', 'blog.sqlite')
@@ -6,36 +8,45 @@ def get_db():
     db.row_factory = sqlite3.Row
     return db
 
+
 def init_db():
     f = open('schema.sql', 'r')
     # print(f.read())
     db.executescript(f.read())
 
-def insert_user(username, password, email,role):
+
+def insert_user(username, password, email, role):
     db.execute('INSERT INTO user (username, password, email, role) VALUES (?, ?, ?, ?)',
                (username, password, email, role))
     db.commit()
+
 
 def insert_post(username, title, body):
     db.execute('INSERT INTO post (username, title, body) VALUES (?, ?, ?)',
                (username, title, body))
     db.commit()
 
+
 def get_all_users():
     users = db.execute('SELECT * FROM user').fetchall()
     return users
+
 
 def get_all_posts():
     posts = db.execute('SELECT * FROM post').fetchall()
     return posts
 
+
 def print_users(user_list):
     for user in user_list:
-        print ('username: ', user['username'], ' password: ', user['password'], 'email: ', user['email'], 'role: ', user['role'])
+        print('username: ', user['username'], ' password: ', user['password'], 'email: ', user['email'], 'role: ',
+              user['role'])
+
 
 def print_posts(post_list):
     for post in post_list:
         print('username: ', post['username'], 'title: ', post['title'], 'body: ', post['body'])
+
 
 db = get_db()
 

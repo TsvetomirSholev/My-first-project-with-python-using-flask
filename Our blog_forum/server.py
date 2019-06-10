@@ -1,5 +1,7 @@
+import re
+import sqlite3
+
 from flask import Flask, render_template, g, request, redirect, session, flash, url_for
-import sqlite3, os, re
 
 DATABASE = './blog.sqlite'
 
@@ -22,6 +24,7 @@ def get_all_users():
     users = g.db.execute('SELECT * FROM user').fetchall()
     return users
 
+
 def get_all_posts():
     posts = g.db.execute('SELECT * FROM post').fetchall()
     return posts
@@ -31,12 +34,15 @@ def print_users(user_list):
     for user in user_list:
         print_user(user)
 
+
 def print_posts(post_list):
     for post in post_list:
         print_post(post)
 
+
 def print_post(post):
     print('post: ', post['username'], ', title: ', post['title'], ', body: ', post['body'])
+
 
 def print_user(user):
     print('username: ', user['username'], ', password: ', user['password'], ', e-mail: ', user['email'], ', role: ',
@@ -92,7 +98,7 @@ def add_user():
 def edit_user(id):
     error = None
     role = session.get('user').get('role')
-    if role !='admin':
+    if role != 'admin':
         error = 'You do not have permission to perform this action!'
     if error != None:
         flash(error)
